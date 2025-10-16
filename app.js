@@ -8,59 +8,46 @@ window.addEventListener('DOMContentLoaded', () => {
     // --- Modelers (note constructors) --------------------------------------
     const cmmnModeler = new window.CmmnJS({ container: '#cmmn' });
     const bpmnModeler = new window.BpmnJS({ container: '#bpmn' });
-   // DMN — pick constructor from the global namespace that exists on your page
-    const DMNNS = window.dmn || window.DmnJS || window.DMNJS || window.DMN || {};
-    //const DmnModelerCtor =
-    //(typeof DMNNS === 'function' ? DMNNS : null) ||
-    //(typeof DMNNS.Modeler === 'function' ? DMNNS.Modeler : null) ||
-    //(typeof DMNNS.default === 'function' ? DMNNS.default : null);
+    
+    // DMN — robust constructor detection across UMD variants
+    function pickDmnModelerCtor() {
+      const g =
+        window.DmnJS   ||   // most common UMD global
+        window.dmn     ||   // some bundles namespace as `dmn`
+        window.DMNJS   ||   // rare
+        window.DMN     ||   // rare
+        window.dmnjs   ||   // very rare
+        null;
 
-if (!DmnModelerCtor) {
-  console.error('DMN modeler constructor not found. Introspect:', { keys: Object.keys(DMNNS || {}) });
-  alert('DMN modeler library not available (see console).');
-  // return; // optionally bail out to avoid follow-on errors
-}
+      if (!g) return null;
 
-const dmnModeler = new DmnModelerCtor({ container: '#dmn' });
-// AFTER (robust across UMD variants)
-function pickDmnModelerCtor() {
-  const g =
-    window.DmnJS   ||   // most common UMD global
-    window.dmn     ||   // some bundles namespace as `dmn`
-    window.DMNJS   ||   // rare
-    window.DMN     ||   // rare
-    window.dmnjs   ||   // very rare
-    null;
+      // cases:
+      // 1) g is the constructor itself  -> typeof g === 'function'
+      // 2) g is a namespace with .Modeler
+      // 3) g is a namespace with .default (constructor on default export)
+      if (typeof g === 'function') return g;
+      if (typeof g.Modeler === 'function') return g.Modeler;
+      if (typeof g.default === 'function') return g.default;
 
-  if (!g) return null;
+      return null;
+    }
 
-  // cases:
-  // 1) g is the constructor itself  -> typeof g === 'function'
-  // 2) g is a namespace with .Modeler
-  // 3) g is a namespace with .default (constructor on default export)
-  if (typeof g === 'function') return g;
-  if (typeof g.Modeler === 'function') return g.Modeler;
-  if (typeof g.default === 'function') return g.default;
+    const DmnModelerCtor = pickDmnModelerCtor();
 
-  return null;
-}
+    if (!DmnModelerCtor) {
+      console.error('DMN modeler constructor not found. Available DMN globals:', {
+        DmnJS:   typeof window.DmnJS,
+        dmn:     typeof window.dmn,
+        DMNJS:   typeof window.DMNJS,
+        DMN:     typeof window.DMN,
+        dmnjs:   typeof window.dmnjs
+      });
+      alert('DMN modeler library not loaded (or unexpected global). See console for details.');
+      // early return if you want to avoid cascading errors:
+      // return;
+    }
 
-const DmnModelerCtor = pickDmnModelerCtor();
-
-if (!DmnModelerCtor) {
-  console.error('DMN modeler constructor not found. Available DMN globals:', {
-    DmnJS:   typeof window.DmnJS,
-    dmn:     typeof window.dmn,
-    DMNJS:   typeof window.DMNJS,
-    DMN:     typeof window.DMN,
-    dmnjs:   typeof window.dmnjs
-  });
-  alert('DMN modeler library not loaded (or unexpected global). See console for details.');
-  // early return if you want to avoid cascading errors:
-  // return;
-}
-
-// const dmnModeler = new DmnModelerCtor({ container: '#dmn' });
+    const dmnModeler = DmnModelerCtor ? new DmnModelerCtor({ container: '#dmn' }) : null;
 
 
     // --- Tabs ---------------------------------------------------------------
@@ -82,7 +69,7 @@ if (!DmnModelerCtor) {
     // --- Utility: get active DMN canvas ------------------------------------
     function getDmnActiveViewer() {
       // In modeler, we still have "views"
-      return dmnModeler.getActiveViewer?.();
+      return dmnModeler?.getActiveViewer?.();
     }
     function getDmnCanvas() {
       const av = getDmnActiveViewer();
@@ -167,7 +154,7 @@ if (!DmnModelerCtor) {
     }
 
     function wirePropsDMN() {
-      dmnModeler.on?.('views.changed', () => {
+      dmnModeler?.on?.('views.changed', () => {
         const av = getDmnActiveViewer();
         const bus = av?.get('eventBus');
         if (!bus) return;
@@ -210,6 +197,8 @@ if (!DmnModelerCtor) {
 
     // --- DMN: robust view open in modeler ----------------------------------
     async function ensureDmnOpenView() {
+      if (!dmnModeler) return null;
+      
       const current = dmnModeler.getActiveView?.();
       if (current) return current;
 
@@ -250,10 +239,12 @@ if (!DmnModelerCtor) {
         } else if (active === 'bpmn') {
           const { xml } = await bpmnModeler.saveXML({ format: true });
           download('process.bpmn', xml);
-        } else {
+        } else if (dmnModeler) {
           const res = await dmnModeler.saveXML({ format: true });
           const xml = res?.xml ?? res;
           download('policy.dmn', xml);
+        } else {
+          alert('DMN modeler not available');
         }
       } catch (e) { console.error(e); alert('Export failed; see console.'); }
     });
@@ -271,10 +262,12 @@ if (!DmnModelerCtor) {
           } else if (target === 'bpmn') {
             await bpmnModeler.importXML(xml);
             bpmnModeler.get('canvas').zoom('fit-viewport');
-          } else {
+          } else if (dmnModeler) {
             await dmnModeler.importXML(xml);
             const view = await ensureDmnOpenView();
             view && getDmnCanvas()?.zoom('fit-viewport');
+          } else {
+            alert('DMN modeler not available');
           }
         } catch (e) { console.error('Import error', e); alert('Import failed; see console.'); }
         fileInput.value = '';
@@ -334,10 +327,14 @@ if (!DmnModelerCtor) {
       bpmnModeler.get('canvas').zoom('fit-viewport');
       wirePropsBPMN();
 
-      await dmnModeler.importXML(dmnXML);
-      const view = await ensureDmnOpenView();
-      view && getDmnCanvas()?.zoom('fit-viewport');
-      wirePropsDMN();
+      if (dmnModeler) {
+        await dmnModeler.importXML(dmnXML);
+        const view = await ensureDmnOpenView();
+        view && getDmnCanvas()?.zoom('fit-viewport');
+        wirePropsDMN();
+      } else {
+        console.warn('DMN modeler not available, skipping DMN initialization');
+      }
 
     } catch (err) {
       console.error('Import error', err);
