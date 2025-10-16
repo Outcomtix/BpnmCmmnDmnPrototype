@@ -10,44 +10,49 @@ window.addEventListener('DOMContentLoaded', () => {
     const bpmnModeler = new window.BpmnJS({ container: '#bpmn' });
     
     // DMN — robust constructor detection across UMD variants
-    function pickDmnModelerCtor() {
-      const g =
-        window.DmnJS   ||   // most common UMD global
-        window.dmn     ||   // some bundles namespace as `dmn`
-        window.DMNJS   ||   // rare
-        window.DMN     ||   // rare
-        window.dmnjs   ||   // very rare
-        null;
+    let dmnModeler = null;
+    
+    try {
+      function pickDmnModelerCtor() {
+        const g =
+          window.DmnJS   ||   // most common UMD global
+          window.dmn     ||   // some bundles namespace as `dmn`
+          window.DMNJS   ||   // rare
+          window.DMN     ||   // rare
+          window.dmnjs   ||   // very rare
+          null;
 
-      if (!g) return null;
+        if (!g) return null;
 
-      // cases:
-      // 1) g is the constructor itself  -> typeof g === 'function'
-      // 2) g is a namespace with .Modeler
-      // 3) g is a namespace with .default (constructor on default export)
-      if (typeof g === 'function') return g;
-      if (typeof g.Modeler === 'function') return g.Modeler;
-      if (typeof g.default === 'function') return g.default;
+        // cases:
+        // 1) g is the constructor itself  -> typeof g === 'function'
+        // 2) g is a namespace with .Modeler
+        // 3) g is a namespace with .default (constructor on default export)
+        if (typeof g === 'function') return g;
+        if (typeof g.Modeler === 'function') return g.Modeler;
+        if (typeof g.default === 'function') return g.default;
 
-      return null;
+        return null;
+      }
+
+      const DmnModelerCtor = pickDmnModelerCtor();
+
+      if (!DmnModelerCtor) {
+        console.error('DMN modeler constructor not found. Available DMN globals:', {
+          DmnJS:   typeof window.DmnJS,
+          dmn:     typeof window.dmn,
+          DMNJS:   typeof window.DMNJS,
+          DMN:     typeof window.DMN,
+          dmnjs:   typeof window.dmnjs
+        });
+        console.warn('DMN modeler library not loaded (or unexpected global). DMN functionality will be disabled.');
+      } else {
+        dmnModeler = new DmnModelerCtor({ container: '#dmn' });
+      }
+    } catch (err) {
+      console.error('Error initializing DMN modeler:', err);
+      console.warn('DMN functionality will be disabled.');
     }
-
-    const DmnModelerCtor = pickDmnModelerCtor();
-
-    if (!DmnModelerCtor) {
-      console.error('DMN modeler constructor not found. Available DMN globals:', {
-        DmnJS:   typeof window.DmnJS,
-        dmn:     typeof window.dmn,
-        DMNJS:   typeof window.DMNJS,
-        DMN:     typeof window.DMN,
-        dmnjs:   typeof window.dmnjs
-      });
-      alert('DMN modeler library not loaded (or unexpected global). See console for details.');
-      // early return if you want to avoid cascading errors:
-      // return;
-    }
-
-    const dmnModeler = DmnModelerCtor ? new DmnModelerCtor({ container: '#dmn' }) : null;
 
 
     // --- Tabs ---------------------------------------------------------------
