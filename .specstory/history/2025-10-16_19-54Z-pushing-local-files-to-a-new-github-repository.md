@@ -303,7 +303,7 @@ The DMN functionality should now either work properly or fail gracefully without
 
 ---
 
-_**User (2025-10-16 20:19Z)**_
+_**User (2025-10-16 20:21Z)**_
 
 the DMN viewrr almost works but the formatting is all awry, with missing borders and oddly positioned parts.
 
@@ -311,7 +311,93 @@ the DMN viewrr almost works but the formatting is all awry, with missing borders
 
 _**Assistant (copilot/claude-sonnet-4)**_
 
-The DMN viewer formatting issues are likely due to missing or incorrectly loaded CSS files. Let me examine the current CSS imports and fix the DMN styling issues. I notice there's a version mismatch! The HTML is loading DMN CSS from version 12.6.2, but according to the package.json, we're using dmn-js version 17.4.0. Let me check the package.json: Yes, that's the issue! The JavaScript is loading dmn-js version 17.4.0, but the CSS is loading from version 12.6.2. Let me also check what version is actually being loaded in the script tags: 
+The DMN viewer formatting issues are likely due to missing or incorrectly loaded CSS files. Let me examine the current CSS imports and fix the DMN styling issues. I notice there's a version mismatch! The HTML is loading DMN CSS from version 12.6.2, but according to the package.json, we're using dmn-js version 17.4.0. Let me check the package.json: Yes, that's the issue! The JavaScript is loading dmn-js version 17.4.0, but the CSS is loading from version 12.6.2. Let me also check what version is actually being loaded in the script tags: The script is loading from `dmn-js` without a version specified, which means it's getting the latest version (17.4.0+), but the CSS is still loading from the old version 12.6.2. Let me fix this by updating both the CSS and JS to use the same version. I'll use the latest version for consistency: 
+```
+
+```
+Good, I've updated the CSS to use the correct DMN version 17.4.0 and added the missing CSS files. Now let me also update the JavaScript to use the same version: 
+```
+
+```
+Now let me also add some specific CSS to help with DMN formatting issues that might be caused by conflicts with our custom styles: Now let me add specific CSS fixes for DMN styling issues to the end of the `styles.css` file: 
+```
+
+```
+Now let's commit and push these changes: Now let me start the server again to test the fixes: ## ✅ **DMN Viewer Formatting Issues Fixed!**
+
+### **What was causing the formatting problems:**
+
+#### **1. Version Mismatch** 
+- **CSS** was loading from DMN-js version **12.6.2**
+- **JavaScript** was loading from DMN-js version **17.4.0** (latest)
+- This created incompatible styling between the library versions
+
+#### **2. Missing CSS Files**
+- Several important DMN CSS files were missing:
+  - `dmn-js-literal-expression.css`
+  - `dmn-js-boxed-expression.css` 
+  - `dmn-js-boxed-expression-controls.css`
+
+#### **3. CSS Conflicts**
+- Custom styles were interfering with DMN component styling
+- Missing specific styling for DMN decision tables, palettes, and context menus
+
+### **Complete Fix Applied:**
+
+#### **1. Version Synchronization**
+```html
+<!-- Updated all DMN resources to version 17.4.0 -->
+<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/...">
+<script defer src="https://unpkg.com/dmn-js@17.4.0/dist/dmn-modeler.development.js"></script>
+```
+
+#### **2. Complete CSS Coverage**
+Added all necessary DMN CSS files:
+- ✅ `dmn-js-shared.css`
+- ✅ `dmn-js-drd.css` (Decision Requirements Diagram)
+- ✅ `dmn-js-decision-table.css`
+- ✅ `dmn-js-decision-table-controls.css`
+- ✅ `dmn-js-literal-expression.css` (NEW)
+- ✅ `dmn-js-boxed-expression.css` (NEW)
+- ✅ `dmn-js-boxed-expression-controls.css` (NEW)
+
+#### **3. Custom DMN Styling**
+Added comprehensive CSS fixes for:
+- **Decision Tables**: Proper borders, cell padding, header styling
+- **Palette**: Consistent button styling and hover effects
+- **Context Menus**: Proper positioning and visual consistency
+- **Literal Expression Editor**: Monospace font and proper borders
+- **Boxed Expressions**: Cell borders and spacing
+- **DRD (Decision Requirements Diagram)**: Background and container styling
+
+### **Result:**
+The DMN viewer should now display with:
+- ✅ **Proper borders** around all elements
+- ✅ **Correctly positioned** palettes and menus
+- ✅ **Consistent styling** with the rest of the application
+- ✅ **Readable decision tables** with clear cell boundaries
+- ✅ **Functional expression editors** with proper formatting
+
+### **To Test:**
+1. **Hard refresh** the browser (Ctrl+F5 or Cmd+Shift+R) to clear cache
+2. **Click the DMN tab** to switch to the decision model view
+3. **Check that elements have proper borders and positioning**
+4. **Try interacting with different DMN views** (DRD, Decision Table, Literal Expression)
+
+The DMN viewer should now display professionally with proper formatting that matches the modern design of your BPMN and CMMN viewers!
+
+---
+
+_**User (2025-10-16 20:26Z)**_
+
+that does now seem t owork correctly. :)
+can we please make soem changes that add some formstting  to ther BPMN, CMMN, and DMN to add some colour and other UI feartures to make it fit more easily into the rest of the app which used predoeminantly 'Material' theme. 
+
+---
+
+_**Assistant (copilot/claude-sonnet-4)**_
+
+
 
 ---
 

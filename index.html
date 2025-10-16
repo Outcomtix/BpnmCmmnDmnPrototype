@@ -1,94 +1,161 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OutcomeAI ized — Modern Diagram Demo (CMMN · BPMN · DMN)</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OutcomeAI ized — Modern Diagram Demo (CMMN · BPMN · DMN)</title>
 
-  <!-- cmmn / bpmn CSS -->
-<!-- in <head> add the library CSS: -->
-<link rel="stylesheet" href="https://unpkg.com/diagram-js@11.12.0/dist/diagram-js.css">
-<link rel="stylesheet" href="https://unpkg.com/bpmn-js@10.1.0/dist/assets/bpmn-font/css/bpmn.css">
-<link rel="stylesheet" href="https://unpkg.com/bpmn-js@10.1.0/dist/assets/bpmn-js.css">
-<link rel="stylesheet" href="https://unpkg.com/cmmn-js@0.20.0/dist/assets/cmmn-font/css/cmmn.css">
-<link rel="stylesheet" href="https://unpkg.com/cmmn-js@0.20.0/dist/assets/cmmn-js.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/diagram-js.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-font/css/dmn.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-shared.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-drd.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-decision-table.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-decision-table-controls.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-literal-expression.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-boxed-expression.css">
-<link rel="stylesheet" href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-boxed-expression-controls.css">
+    <!-- Google Fonts for Material Design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- (your) styles.css after those -->
-<link rel="stylesheet" href="styles.css">
+    <!-- cmmn / bpmn CSS -->
+    <!-- in <head> add the library CSS: -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/diagram-js@11.12.0/dist/diagram-js.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bpmn-js@10.1.0/dist/assets/bpmn-font/css/bpmn.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bpmn-js@10.1.0/dist/assets/bpmn-js.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/cmmn-js@0.20.0/dist/assets/cmmn-font/css/cmmn.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/cmmn-js@0.20.0/dist/assets/cmmn-js.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/diagram-js.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-font/css/dmn.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-shared.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-drd.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-decision-table.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-decision-table-controls.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-literal-expression.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-boxed-expression.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/dmn-js@17.4.0/dist/assets/dmn-js-boxed-expression-controls.css"
+    />
 
-</head>
-<body>
-  <header class="topbar">
-    <div class="brand">OutcomeAI</div>
-    <div class="actions">
-      <button id="btn-reset" class="btn">Reset view</button>
-      <button id="btn-export" class="btn btn-primary">Export XML</button>
+    <!-- (your) styles.css after those -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">OutcomeAI</div>
       <div class="actions">
-      <button id="btn-import-cmmn" class="btn">Import CMMN</button>
-      <button id="btn-import-bpmn" class="btn">Import BPMN</button>
-      <button id="btn-import-dmn"  class="btn">Import DMN</button>
-      <button id="btn-export" class="btn">Export XML</button>
-      <button id="btn-reset" class="btn">Reset View</button>
-      <button id="btn-token" class="btn btn-primary">Run Token (BPMN)</button>
+        <button id="btn-reset" class="btn">Reset view</button>
+        <button id="btn-export" class="btn btn-primary">Export XML</button>
+        <div class="actions">
+          <button id="btn-import-cmmn" class="btn">Import CMMN</button>
+          <button id="btn-import-bpmn" class="btn">Import BPMN</button>
+          <button id="btn-import-dmn" class="btn">Import DMN</button>
+          <button id="btn-export" class="btn">Export XML</button>
+          <button id="btn-reset" class="btn">Reset View</button>
+          <button id="btn-token" class="btn btn-primary">
+            Run Token (BPMN)
+          </button>
+        </div>
+        <input
+          id="file-input"
+          type="file"
+          accept=".xml,.bpmn,.cmmn,.dmn"
+          style="display: none"
+        />
       </div>
-      <input id="file-input" type="file" accept=".xml,.bpmn,.cmmn,.dmn" style="display:none">
-    </div>
-  </header>
+    </header>
 
-  <main class="main">
-    <nav class="tabs">
-      <button class="tab active" data-target="cmmn">CMMN (Case)</button>
-      <button class="tab" data-target="bpmn">BPMN (Work)</button>
-      <button class="tab" data-target="dmn">DMN (Policy)</button>
-    </nav>
+    <main class="main">
+      <nav class="tabs">
+        <button class="tab active" data-target="cmmn">CMMN (Case)</button>
+        <button class="tab" data-target="bpmn">BPMN (Work)</button>
+        <button class="tab" data-target="dmn">DMN (Policy)</button>
+      </nav>
 
-    <section id="canvas-cmmn" class="canvas active">
-      <div class="viewer" id="cmmn"></div>
-      <aside class="side">
-        <h3>Properties · Artefacts</h3>
-        <div id="cmmn-props" class="props empty">Click a shape to inspect.</div>
-      </aside>
-    </section>
+      <section id="canvas-cmmn" class="canvas active">
+        <div class="viewer" id="cmmn"></div>
+        <aside class="side">
+          <h3>Properties · Artefacts</h3>
+          <div id="cmmn-props" class="props empty">
+            Click a shape to inspect.
+          </div>
+        </aside>
+      </section>
 
-    <section id="canvas-bpmn" class="canvas">
-      <div class="viewer" id="bpmn"></div>
-      <aside class="side">
-        <h3>Properties</h3>
-        <div id="bpmn-props" class="props empty">Click a shape to inspect.</div>
-        <div class="divider"></div>
-        <h4>Demo Token</h4>
-        <div class="small">Press to animate a token along the current flow.</div>
-        <button id="btn-token" class="btn">Run token</button>
-      </aside>
-    </section>
+      <section id="canvas-bpmn" class="canvas">
+        <div class="viewer" id="bpmn"></div>
+        <aside class="side">
+          <h3>Properties</h3>
+          <div id="bpmn-props" class="props empty">
+            Click a shape to inspect.
+          </div>
+          <div class="divider"></div>
+          <h4>Demo Token</h4>
+          <div class="small">
+            Press to animate a token along the current flow.
+          </div>
+          <button id="btn-token" class="btn">Run token</button>
+        </aside>
+      </section>
 
-    <section id="canvas-dmn" class="canvas">
-      <div class="viewer" id="dmn"></div>
-      <aside class="side">
-        <h3>Properties</h3>
-        <div id="dmn-props" class="props empty">Click a node to inspect.</div>
-      </aside>
-    </section>
-  </main>
+      <section id="canvas-dmn" class="canvas">
+        <div class="viewer" id="dmn"></div>
+        <aside class="side">
+          <h3>Properties</h3>
+          <div id="dmn-props" class="props empty">Click a node to inspect.</div>
+        </aside>
+      </section>
+    </main>
 
-  <footer class="footer">
-    <span>Modern diagram demo · CSS-only makeover + cross-links</span>
-  </footer>
+    <footer class="footer">
+      <span>Modern diagram demo · CSS-only makeover + cross-links</span>
+    </footer>
 
-  <!-- libs -->
-<script defer src="https://unpkg.com/cmmn-js@0.20.0/dist/cmmn-modeler.development.js"></script>
-<script defer src="https://unpkg.com/bpmn-js@10.1.0/dist/bpmn-modeler.development.js"></script>
-<script defer src="https://unpkg.com/dmn-js@17.4.0/dist/dmn-modeler.development.js"></script>
-<script defer src="app.js?v=3"></script>
-
-</body>
+    <!-- libs -->
+    <script
+      defer
+      src="https://unpkg.com/cmmn-js@0.20.0/dist/cmmn-modeler.development.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/bpmn-js@10.1.0/dist/bpmn-modeler.development.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/dmn-js@17.4.0/dist/dmn-modeler.development.js"
+    ></script>
+    <script defer src="app.js?v=4"></script>
+  </body>
 </html>

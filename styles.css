@@ -1,69 +1,337 @@
-:root{
-  --bg:#f7f8fb;
-  --panel:#ffffff;
-  --muted:#5a6478;
-  --card:#ffffff;
-  --ink:#0e1324;
-  --accent:#0aa3d2;   /* cyan-ish */
-  --accent-2:#7dbb00; /* green */
-  --warn:#b86600;
-  --border:#e6e9f2;
-  --grid:#eef1f7;
+:root {
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --muted: #5a6478;
+  --card: #ffffff;
+  --ink: #0e1324;
+  --accent: #0aa3d2; /* cyan-ish */
+  --accent-2: #7dbb00; /* green */
+  --warn: #b86600;
+  --border: #e6e9f2;
+  --grid: #eef1f7;
+  
+  /* Material Design color palette */
+  --primary: #1976d2;
+  --primary-light: #42a5f5;
+  --primary-dark: #1565c0;
+  --secondary: #dc004e;
+  --secondary-light: #f06292;
+  --secondary-dark: #c51162;
+  --success: #4caf50;
+  --warning: #ff9800;
+  --error: #f44336;
+  --info: #2196f3;
+  
+  /* Material elevations */
+  --shadow-1: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --shadow-3: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --shadow-4: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
-body{background:var(--bg); color:var(--ink);}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, 
+    "Helvetica Neue", Arial, sans-serif;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
 
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:2}
-.brand{font-weight:700;letter-spacing:.4px}
-.actions{display:flex;gap:8px}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+}
 
-.main{display:grid;grid-template-rows:auto 1fr; height:calc(100vh - 56px);}
-.tabs{display:flex;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:56px;z-index:1}
-.tab{background:#fff;border:1px solid var(--border);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
-.tab.active{background:#f2f6ff;border-color:#cfd8f3;box-shadow:0 0 0 1px #d8e2ff inset}
-.canvas{display:grid;grid-template-columns: 1fr 320px; gap:12px; padding:12px; height:100%; display:none}
-.canvas.active{display:grid}
-.viewer{background:#fff;border:1px solid var(--border);border-radius:12px;min-height:520px; position:relative; overflow:hidden}
-.side{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px; display:flex; flex-direction:column; gap:10px; min-height:520px}
-.props{background:linear-gradient(180deg,#ffffff, #fafbfe);border:1px dashed #d9e0f0;border-radius:10px;padding:10px;min-height:180px;max-height:50vh;overflow:auto}
-.props.empty{opacity:.8}
-.divider{height:1px;background:var(--border);margin:6px 0}
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - 56px);
+}
+.tabs {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 56px;
+  z-index: 1;
+  box-shadow: var(--shadow-1);
+}
 
-.btn{background:#fff;border:1px solid var(--border);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
-.btn:hover{background:#f7faff}
-.btn-primary{background:linear-gradient(90deg,#4d89ff,#27dfff);border:none;color:#fff}
+.tab {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 12px 24px;
+  border-radius: 24px 24px 0 0;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Roboto', 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
 
-.footer{padding:10px 16px;border-top:1px solid var(--border);background:#fff;color:var(--muted)}
+.tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab:hover {
+  background: rgba(25, 118, 210, 0.08);
+  color: var(--primary);
+}
+
+.tab:hover::before {
+  width: 100%;
+}
+
+.tab.active {
+  background: rgba(25, 118, 210, 0.12);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.tab.active::before {
+  width: 100%;
+}
+.canvas {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+  padding: 12px;
+  height: 100%;
+  display: none;
+}
+.canvas.active {
+  display: grid;
+}
+.viewer {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+}
+.side {
+  background: var(--panel);
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 520px;
+  box-shadow: var(--shadow-2);
+}
+
+.side h3, .side h4 {
+  font-family: 'Roboto', 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+.props {
+  background: linear-gradient(135deg, #fafafa, #f5f5f5);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 180px;
+  max-height: 50vh;
+  overflow: auto;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.props:hover {
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.props.empty {
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-style: italic;
+  font-family: 'Roboto', 'Inter', sans-serif;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 12px 0;
+}
+
+.btn {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 12px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Roboto', 'Inter', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(25, 118, 210, 0.1);
+  transition: width 0.3s ease, height 0.3s ease;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover {
+  background: var(--primary-light);
+  color: white;
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+  color: white;
+  box-shadow: var(--shadow-2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  box-shadow: var(--shadow-3);
+  transform: translateY(-2px);
+}
+
+.footer {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted);
+}
 
 /* Modernized outline markers for BPMN/CMMN */
-.djs-element.marker-enabled .djs-visual > *{ stroke: var(--accent-2) !important; stroke-width:3px !important; }
-.djs-element.marker-active .djs-visual > *{ stroke: var(--accent) !important;  stroke-width:3px !important; filter: drop-shadow(0 0 .25rem rgba(10,163,210,.35)); }
-.djs-element.marker-completed .djs-visual > *{ stroke:#a9b3c7 !important; stroke-width:3px !important; opacity:.9 !important; stroke-dasharray:6 3 !important; }
+.djs-element.marker-enabled .djs-visual > * {
+  stroke: var(--accent-2) !important;
+  stroke-width: 3px !important;
+}
+.djs-element.marker-active .djs-visual > * {
+  stroke: var(--accent) !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 0.25rem rgba(10, 163, 210, 0.35));
+}
+.djs-element.marker-completed .djs-visual > * {
+  stroke: #a9b3c7 !important;
+  stroke-width: 3px !important;
+  opacity: 0.9 !important;
+  stroke-dasharray: 6 3 !important;
+}
 
 /* Sequence flow emphasis (BPMN) */
-#bpmn .djs-connection.marker-active .djs-visual > path{ stroke: var(--accent) !important; stroke-width:4px !important; }
-#bpmn .djs-connection.marker-completed .djs-visual > path{ stroke:#a9b3c7 !important; stroke-width:4px !important; stroke-dasharray:6 3 !important; opacity:.95 !important; }
+#bpmn .djs-connection.marker-active .djs-visual > path {
+  stroke: var(--accent) !important;
+  stroke-width: 4px !important;
+}
+#bpmn .djs-connection.marker-completed .djs-visual > path {
+  stroke: #a9b3c7 !important;
+  stroke-width: 4px !important;
+  stroke-dasharray: 6 3 !important;
+  opacity: 0.95 !important;
+}
 
 /* Tiny state pill overlay */
-.state-pill{font:12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:#fff; background:var(--accent); padding:2px 6px; border-radius:999px; box-shadow:0 1px 2px rgba(0,0,0,.2)}
-.pill-enabled{ background: var(--accent-2); }
-.pill-active{ background: var(--accent); }
-.pill-completed{ background: #a9b3c7; color:#24314f; }
+.state-pill {
+  font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #fff;
+  background: var(--accent);
+  padding: 2px 6px;
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.pill-enabled {
+  background: var(--accent-2);
+}
+.pill-active {
+  background: var(--accent);
+}
+.pill-completed {
+  background: #a9b3c7;
+  color: #24314f;
+}
 
 /* Demo token dot */
-.token{ position:absolute; width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(10,163,210,.6); pointer-events:none; transform:translate(-6px,-6px);}
+.token {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(10, 163, 210, 0.6);
+  pointer-events: none;
+  transform: translate(-6px, -6px);
+}
 
 /* Subtle grid background if you want it behind canvases (optional) */
-.viewer::before{
-  content:'';
-  position:absolute; inset:0;
-  background:
-    linear-gradient(0deg, transparent 23px, var(--grid) 24px),
+.viewer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, transparent 23px, var(--grid) 24px),
     linear-gradient(90deg, transparent 23px, var(--grid) 24px);
-  background-size:24px 24px;
-  pointer-events:none;
-  opacity:.45;
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.45;
 }
 
 /* DMN-specific styling fixes */
@@ -110,7 +378,7 @@ body{background:var(--bg); color:var(--ink);}
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 #dmn .context-pad .entry {
@@ -145,7 +413,7 @@ body{background:var(--bg); color:var(--ink);}
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 8px;
-  font-family: 'Monaco', 'Consolas', monospace;
+  font-family: "Monaco", "Consolas", monospace;
 }
 
 /* Fix any DMN boxed expression issues */
@@ -157,4 +425,302 @@ body{background:var(--bg); color:var(--ink);}
 #dmn .boxed-expression .cell {
   border: 1px solid var(--border);
   padding: 4px 8px;
+}
+
+/* ======================================
+   MATERIAL DESIGN THEMING FOR DIAGRAMS
+   ====================================== */
+
+/* Enhanced viewer containers with Material elevation */
+.viewer {
+  background: var(--panel);
+  border: none;
+  border-radius: 16px;
+  box-shadow: var(--shadow-2);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.viewer:hover {
+  box-shadow: var(--shadow-3);
+}
+
+/* BPMN Material Design Styling */
+#bpmn .djs-element[data-element-id] .djs-visual > rect,
+#bpmn .djs-element[data-element-id] .djs-visual > circle,
+#bpmn .djs-element[data-element-id] .djs-visual > polygon {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* BPMN Start Events */
+#bpmn .djs-element[data-element-id*="Start"] .djs-visual > circle {
+  fill: var(--success) !important;
+  stroke: var(--success) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3));
+}
+
+/* BPMN End Events */
+#bpmn .djs-element[data-element-id*="End"] .djs-visual > circle {
+  fill: var(--error) !important;
+  stroke: var(--error) !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 2px 4px rgba(244, 67, 54, 0.3));
+}
+
+/* BPMN Tasks */
+#bpmn .djs-element[data-element-id*="Task"] .djs-visual > rect {
+  fill: var(--primary-light) !important;
+  stroke: var(--primary) !important;
+  stroke-width: 2px !important;
+  rx: 8px !important;
+  filter: drop-shadow(0 2px 4px rgba(25, 118, 210, 0.2));
+}
+
+/* BPMN User Tasks */
+#bpmn .djs-element[data-element-id*="UserTask"] .djs-visual > rect {
+  fill: var(--secondary-light) !important;
+  stroke: var(--secondary) !important;
+  stroke-width: 2px !important;
+  rx: 8px !important;
+  filter: drop-shadow(0 2px 4px rgba(220, 0, 78, 0.2));
+}
+
+/* BPMN Gateways */
+#bpmn .djs-element[data-element-id*="Gateway"] .djs-visual > polygon {
+  fill: var(--warning) !important;
+  stroke: #f57c00 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 152, 0, 0.3));
+}
+
+/* BPMN Sequence Flows */
+#bpmn .djs-connection .djs-visual > path {
+  stroke: var(--primary) !important;
+  stroke-width: 2px !important;
+  transition: stroke-width 0.2s ease;
+}
+
+#bpmn .djs-connection:hover .djs-visual > path {
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 1px 3px rgba(25, 118, 210, 0.4));
+}
+
+/* BPMN Text Labels */
+#bpmn .djs-element .djs-label {
+  font-family: 'Roboto', 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  fill: var(--ink) !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* CMMN Material Design Styling */
+#cmmn .djs-element[data-element-id] .djs-visual > rect,
+#cmmn .djs-element[data-element-id] .djs-visual > circle {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* CMMN Case Plan Models */
+#cmmn .djs-element[data-element-id*="Case"] .djs-visual > rect {
+  fill: #e3f2fd !important;
+  stroke: var(--primary) !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 8,4 !important;
+  rx: 12px !important;
+  filter: drop-shadow(0 2px 6px rgba(25, 118, 210, 0.15));
+}
+
+/* CMMN Tasks */
+#cmmn .djs-element[data-element-id*="Task"] .djs-visual > rect {
+  fill: var(--info) !important;
+  stroke: #1976d2 !important;
+  stroke-width: 2px !important;
+  rx: 6px !important;
+  filter: drop-shadow(0 2px 4px rgba(33, 150, 243, 0.2));
+}
+
+/* CMMN Milestones */
+#cmmn .djs-element[data-element-id*="Milestone"] .djs-visual > rect {
+  fill: var(--success) !important;
+  stroke: #2e7d32 !important;
+  stroke-width: 2px !important;
+  rx: 20px !important;
+  filter: drop-shadow(0 2px 4px rgba(76, 175, 80, 0.3));
+}
+
+/* CMMN Event Listeners */
+#cmmn .djs-element[data-element-id*="Event"] .djs-visual > circle {
+  fill: var(--warning) !important;
+  stroke: #f57c00 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 152, 0, 0.3));
+}
+
+/* CMMN Connectors */
+#cmmn .djs-connection .djs-visual > path {
+  stroke: var(--muted) !important;
+  stroke-width: 2px !important;
+  stroke-dasharray: 4,2 !important;
+}
+
+/* CMMN Text Labels */
+#cmmn .djs-element .djs-label {
+  font-family: 'Roboto', 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  fill: var(--ink) !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* DMN Material Design Styling */
+/* DMN Decision nodes */
+#dmn .djs-element[data-element-id*="Decision"] .djs-visual > rect {
+  fill: var(--primary-light) !important;
+  stroke: var(--primary) !important;
+  stroke-width: 2px !important;
+  rx: 4px !important;
+  filter: drop-shadow(0 2px 4px rgba(25, 118, 210, 0.2));
+}
+
+/* DMN Input Data */
+#dmn .djs-element[data-element-id*="Input"] .djs-visual > ellipse {
+  fill: var(--info) !important;
+  stroke: #1976d2 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(33, 150, 243, 0.2));
+}
+
+/* DMN Knowledge Sources */
+#dmn .djs-element[data-element-id*="Knowledge"] .djs-visual > path {
+  fill: var(--secondary-light) !important;
+  stroke: var(--secondary) !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(220, 0, 78, 0.2));
+}
+
+/* DMN Business Knowledge Models */
+#dmn .djs-element[data-element-id*="BusinessKnowledge"] .djs-visual > path {
+  fill: var(--warning) !important;
+  stroke: #f57c00 !important;
+  stroke-width: 2px !important;
+  filter: drop-shadow(0 2px 4px rgba(255, 152, 0, 0.3));
+}
+
+/* DMN Information Requirements */
+#dmn .djs-connection[data-element-id*="InformationRequirement"] .djs-visual > path {
+  stroke: var(--primary) !important;
+  stroke-width: 2px !important;
+  marker-end: url('#sequenceflow-end-primary') !important;
+}
+
+/* DMN Knowledge Requirements */
+#dmn .djs-connection[data-element-id*="KnowledgeRequirement"] .djs-visual > path {
+  stroke: var(--secondary) !important;
+  stroke-width: 2px !important;
+  stroke-dasharray: 6,3 !important;
+}
+
+/* DMN Authority Requirements */
+#dmn .djs-connection[data-element-id*="AuthorityRequirement"] .djs-visual > path {
+  stroke: var(--warning) !important;
+  stroke-width: 2px !important;
+  stroke-dasharray: 3,3 !important;
+}
+
+/* DMN Text Labels */
+#dmn .djs-element .djs-label {
+  font-family: 'Roboto', 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  fill: var(--ink) !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* DMN Decision Table Enhancement */
+#dmn .tjs-table th {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary)) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+#dmn .tjs-table td {
+  transition: background-color 0.2s ease;
+}
+
+#dmn .tjs-table td:hover {
+  background: #f5f5f5 !important;
+}
+
+/* Hover Effects for All Diagrams */
+.djs-element:hover .djs-visual > * {
+  transform: scale(1.02);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Selection States */
+.djs-element.djs-selected .djs-visual > * {
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 8px rgba(25, 118, 210, 0.5)) !important;
+}
+
+/* Context Pad Styling */
+.djs-context-pad {
+  background: var(--panel) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-3) !important;
+  padding: 4px !important;
+}
+
+.djs-context-pad .entry {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 8px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.djs-context-pad .entry:hover {
+  background: var(--primary-light) !important;
+  color: white !important;
+  transform: scale(1.1);
+}
+
+/* Palette Styling */
+.djs-palette {
+  background: var(--panel) !important;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-2) !important;
+  padding: 8px !important;
+}
+
+.djs-palette .entry {
+  border-radius: 8px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  margin: 2px !important;
+}
+
+.djs-palette .entry:hover {
+  background: var(--primary-light) !important;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+/* Canvas Background Enhancement */
+.djs-canvas {
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%) !important;
+}
+
+/* Add subtle animation to diagram loading */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.viewer .djs-canvas {
+  animation: fadeInScale 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
