@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL"
+  xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI"
+  xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC"
+  xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:oa="https://outcome.ai/schema/oa"
+  id="Defs_Demo" targetNamespace="https://outcome.ai/cmmn/demo/v1">
+
+  <cmmn:case id="Case_Demo" name="Complaint Case">
+    <cmmn:casePlanModel id="cpm" name="Complaint Case">
+      <cmmn:humanTask id="t_Register" name="Register Complaint">
+        <cmmn:extensionElements><oa:uiHints badge="doc" tooltip="Capture initial details"/></cmmn:extensionElements>
+      </cmmn:humanTask>
+      <cmmn:planItem id="PI_t_Register" definitionRef="t_Register"/>
+
+      <cmmn:decisionTask id="t_ReqArtefacts" name="Determine Required Artefacts" decisionRef="dmn:Decision_Priority">
+        <cmmn:extensionElements><oa:uiHints badge="DMN" tooltip="Figure out priority"/></cmmn:extensionElements>
+      </cmmn:decisionTask>
+      <cmmn:planItem id="PI_t_ReqArtefacts" definitionRef="t_ReqArtefacts"/>
+
+      <cmmn:processTask id="t_RunBPMN" name="Run BPMN Investigation" processRef="bpmn:ReviewComplaintFlow">
+        <cmmn:extensionElements><oa:uiHints badge="BPMN" tooltip="Kick off investigation flow"/></cmmn:extensionElements>
+      </cmmn:processTask>
+      <cmmn:planItem id="PI_t_RunBPMN" definitionRef="t_RunBPMN"/>
+
+      <cmmn:milestone id="ms_Close" name="Closed"/>
+      <cmmn:planItem id="PI_ms_Close" definitionRef="ms_Close"/>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram id="D1">
+      <cmmndi:CMMNShape id="sh_PI_t_Register" cmmnElementRef="PI_t_Register"><dc:Bounds x="60" y="120" width="240" height="70"/></cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="sh_PI_t_ReqArtefacts" cmmnElementRef="PI_t_ReqArtefacts"><dc:Bounds x="330" y="120" width="280" height="70"/></cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="sh_PI_t_RunBPMN" cmmnElementRef="PI_t_RunBPMN"><dc:Bounds x="640" y="120" width="280" height="70"/></cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="sh_PI_ms_Close" cmmnElementRef="PI_ms_Close"><dc:Bounds x="950" y="120" width="140" height="50"/></cmmndi:CMMNShape>
+    </cmmndi:CMMNDiagram>
+  </cmmndi:CMMNDI>
+</cmmn:definitions>

@@ -1,0 +1,67 @@
+:root{
+  --bg:#f7f8fb;
+  --panel:#ffffff;
+  --muted:#5a6478;
+  --card:#ffffff;
+  --ink:#0e1324;
+  --accent:#0aa3d2;   /* cyan-ish */
+  --accent-2:#7dbb00; /* green */
+  --warn:#b86600;
+  --border:#e6e9f2;
+  --grid:#eef1f7;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
+body{background:var(--bg); color:var(--ink);}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:0;z-index:2}
+.brand{font-weight:700;letter-spacing:.4px}
+.actions{display:flex;gap:8px}
+
+.main{display:grid;grid-template-rows:auto 1fr; height:calc(100vh - 56px);}
+.tabs{display:flex;gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);background:#fff;position:sticky;top:56px;z-index:1}
+.tab{background:#fff;border:1px solid var(--border);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
+.tab.active{background:#f2f6ff;border-color:#cfd8f3;box-shadow:0 0 0 1px #d8e2ff inset}
+.canvas{display:grid;grid-template-columns: 1fr 320px; gap:12px; padding:12px; height:100%; display:none}
+.canvas.active{display:grid}
+.viewer{background:#fff;border:1px solid var(--border);border-radius:12px;min-height:520px; position:relative; overflow:hidden}
+.side{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px; display:flex; flex-direction:column; gap:10px; min-height:520px}
+.props{background:linear-gradient(180deg,#ffffff, #fafbfe);border:1px dashed #d9e0f0;border-radius:10px;padding:10px;min-height:180px;max-height:50vh;overflow:auto}
+.props.empty{opacity:.8}
+.divider{height:1px;background:var(--border);margin:6px 0}
+
+.btn{background:#fff;border:1px solid var(--border);color:var(--ink);padding:8px 12px;border-radius:10px;cursor:pointer}
+.btn:hover{background:#f7faff}
+.btn-primary{background:linear-gradient(90deg,#4d89ff,#27dfff);border:none;color:#fff}
+
+.footer{padding:10px 16px;border-top:1px solid var(--border);background:#fff;color:var(--muted)}
+
+/* Modernized outline markers for BPMN/CMMN */
+.djs-element.marker-enabled .djs-visual > *{ stroke: var(--accent-2) !important; stroke-width:3px !important; }
+.djs-element.marker-active .djs-visual > *{ stroke: var(--accent) !important;  stroke-width:3px !important; filter: drop-shadow(0 0 .25rem rgba(10,163,210,.35)); }
+.djs-element.marker-completed .djs-visual > *{ stroke:#a9b3c7 !important; stroke-width:3px !important; opacity:.9 !important; stroke-dasharray:6 3 !important; }
+
+/* Sequence flow emphasis (BPMN) */
+#bpmn .djs-connection.marker-active .djs-visual > path{ stroke: var(--accent) !important; stroke-width:4px !important; }
+#bpmn .djs-connection.marker-completed .djs-visual > path{ stroke:#a9b3c7 !important; stroke-width:4px !important; stroke-dasharray:6 3 !important; opacity:.95 !important; }
+
+/* Tiny state pill overlay */
+.state-pill{font:12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color:#fff; background:var(--accent); padding:2px 6px; border-radius:999px; box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.pill-enabled{ background: var(--accent-2); }
+.pill-active{ background: var(--accent); }
+.pill-completed{ background: #a9b3c7; color:#24314f; }
+
+/* Demo token dot */
+.token{ position:absolute; width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px rgba(10,163,210,.6); pointer-events:none; transform:translate(-6px,-6px);}
+
+/* Subtle grid background if you want it behind canvases (optional) */
+.viewer::before{
+  content:'';
+  position:absolute; inset:0;
+  background:
+    linear-gradient(0deg, transparent 23px, var(--grid) 24px),
+    linear-gradient(90deg, transparent 23px, var(--grid) 24px);
+  background-size:24px 24px;
+  pointer-events:none;
+  opacity:.45;
+}

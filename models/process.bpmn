@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+  xmlns:oa="https://outcome.ai/schema/oa"
+  id="Defs_BPMN" targetNamespace="https://outcome.ai/bpmn/demo/v1">
+
+  <bpmn:process id="ReviewComplaintFlow" name="Review Complaint">
+    <bpmn:startEvent id="StartEvent_1" name="Start"/>
+    <bpmn:task id="Task_Read" name="Read Complaint"/>
+    <bpmn:userTask id="UserTask_Findings" name="Enter Findings">
+      <bpmn:extensionElements>
+        <oa:jump decisionRef="dmn:Decision_Priority"/>
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_1" name="Done"/>
+
+    <bpmn:sequenceFlow id="F1" sourceRef="StartEvent_1" targetRef="Task_Read"/>
+    <bpmn:sequenceFlow id="F2" sourceRef="Task_Read" targetRef="UserTask_Findings"/>
+    <bpmn:sequenceFlow id="F3" sourceRef="UserTask_Findings" targetRef="EndEvent_1"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ReviewComplaintFlow">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="160" y="160" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Read_di" bpmnElement="Task_Read">
+        <dc:Bounds x="240" y="140" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_Findings_di" bpmnElement="UserTask_Findings">
+        <dc:Bounds x="400" y="140" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="590" y="160" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="F1_di" bpmnElement="F1">
+        <di:waypoint x="196" y="178"/><di:waypoint x="240" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_di" bpmnElement="F2">
+        <di:waypoint x="360" y="180"/><di:waypoint x="400" y="180"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F3_di" bpmnElement="F3">
+        <di:waypoint x="550" y="180"/><di:waypoint x="590" y="178"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
