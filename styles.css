@@ -65,3 +65,96 @@ body{background:var(--bg); color:var(--ink);}
   pointer-events:none;
   opacity:.45;
 }
+
+/* DMN-specific styling fixes */
+#dmn .dmn-palette {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+#dmn .dmn-palette .entry {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin: 2px;
+}
+
+#dmn .dmn-palette .entry:hover {
+  background: var(--bg);
+}
+
+/* Fix DMN decision table styling */
+#dmn .tjs-container {
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+#dmn .tjs-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#dmn .tjs-table th,
+#dmn .tjs-table td {
+  border: 1px solid var(--border);
+  padding: 8px;
+}
+
+#dmn .tjs-table th {
+  background: var(--bg);
+  font-weight: 600;
+}
+
+/* Fix DMN context menu */
+#dmn .context-pad {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#dmn .context-pad .entry {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+/* Fix DMN properties panel integration */
+#dmn .properties-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+/* Ensure DMN canvas has proper sizing */
+#dmn .djs-canvas {
+  background: var(--panel);
+}
+
+/* Fix DMN DRD (Decision Requirements Diagram) styling */
+#dmn .drd-container {
+  background: var(--panel);
+}
+
+/* Fix DMN literal expression editor */
+#dmn .literal-expression-container {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+#dmn .literal-expression-container textarea {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+/* Fix any DMN boxed expression issues */
+#dmn .boxed-expression {
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+#dmn .boxed-expression .cell {
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+}
